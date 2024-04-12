@@ -1,6 +1,5 @@
 const allowedOrigins = [
-    'https://simplifyme.onrender.com',
-    'http://localhost:3000',
+    'https://simplifyme.onrender.com'
 ];
 
 module.exports = allowedOrigins;
