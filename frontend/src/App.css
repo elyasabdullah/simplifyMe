@@ -1,0 +1,42 @@
+/* App.css */
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  color:black;
+  font-family: Arial, Helvetica, sans-serif;
+}
+:root {
+  --secondary-btn-dark-bg-color:#29293b;
+  --secondary-btn-dark-hover-bg-color:#393950;
+  --secondary-btn-dark-color:#ffffff;
+  --secondary-btn-light-bg-color:#dee1e680;
+  --secondary-btn-light-hover-bg-color:#dee1e6;
+  --secondary-btn-light-color:#29293b;
+  --btn-br: 0.375rem;
+  --btn-transition-duration: .15s;
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  color:white;
+}
+p, button, h1 {
+  font-family: Arial, Helvetica, sans-serif;
+}
+button.meBtn {
+  background-color: var(--secondary-btn-light-bg-color);
+  color:var(--secondary-btn-light-color);
+  border: none;
+  padding:0.5rem 1rem;
+  font-size:1.3rem;
+  margin: 1rem 5rem;
+  border-radius: var(--btn-br);
+  cursor:pointer;
+  transition: var(--btn-transition-duration);
+}
+button:hover {
+  background-color: var(--secondary-btn-light-hover-bg-color);
+}
+
+

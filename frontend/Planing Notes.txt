@@ -1,0 +1,199 @@
+ 
+-- Idea of the project (Activity Tracker - SimpliyfyMe)
+
+-- System Functions: 
+   - Authentication: the fields (Username, Email, Password, Roles, Registration 
+      date, email verification, password reset token, social media integration)
+   - Activity management: the user can create weekly and daily activties
+      - Weekly activities fields (Task description, Task time)
+      - Daily activities fields (Title, Description, Start Date, End Date)
+  
+
+
+
+- Pages
+   - Home page 
+      Signed In Users: (Overview of the upcoming activities (pending, upcoming, 
+      completed), Create Activity Option)
+      Unsigned Users: (Introduction and benefits, Sign up resgirstration 
+      section, Sample activities demo, In the sign up we will have login Option)
+      Unsigned users nav links (Home, Features, Sign Up, Login)
+      Signed Users nav options (Home, Daily activities, Weekly activities, 
+      General activities, Profile, Notifications (optional), Features, Logout).
+      I may put one link for all activities
+      - Underneath the nav we will have create activities button when the user 
+      click on this button it will show the user drop down list constaining "
+      Weekly activities, Daily activites, General activity" when the user click
+      on weekly activities button he will be directed to the weekly activities 
+      page.
+      
+   - Weekly, Daily, and Genernal Actvitives pages: The user will see a list or 
+      grid view displaying their weekly activities
+      above that view there is a form for filling out weekly activites (there is 
+      a button for that). The daily and general activities will have the same 
+      functionlity, but in the general the user can set goals that stays for even
+      years.
+   - Sign Up and Login pages (I many not need them becuase I will do that in 
+     the home page)
+   - Notifications or Reminders page for upcoming events and tasks (where the 
+     user will manage that).
+   - Profile Page [I will think about it later it is not important to plan it now]
+   - Features Page [I will plan it later]
+
+- The needed CSS constants are ready now
+- I will use styled-components for the CSS
+- My Project will be responsive, dark-light theme, and browser compatible
+
+- After analyzing and planning the system now I will design the interfaces
+- After that I will build the interface with React, Redux, and styled-components
+  I will also use Formik, Yup, RTK
+- Finally I will develop the the backend endspoints
+- All the layouts, components, and pages has it's own style
+
+-Activities Managment Functions planning
+I will have a my activities page inside it I will have a sidebar
+- In the home page for the authorized users instead of the start here
+button we will have create activity button which will lead the user
+to the activities.
+- On mobile I will have a sidebar containing all the links 
+maybe I will have two icons (one for the global links and one for the 
+activities links )
+- In the activities page we will have these links 
+   - Today activties
+   - This Week Activities
+   - General Activities
+   - Related Activities
+
+When the user clicks the my activities link he will be directed to the
+daily activities (there will be a layout for all activities)
+
+- Daily activities input (task description, task date and time)
+- Weekly activities input (task description, task date and time)
+- General activities input (task description, task date and time)
+- Related Activities we will have two forms
+   - add category form input (category name)
+   - add activity form input (select category, task description, task date and time)
+
+I will have a watch in my project and date
+The remaining things I need to add (data, state, hooks).
+
+Activity Schema
+
+let obj = {
+  'general': 
+    {
+      'generalactiv': [
+        {}, {}, {}
+      ],
+      'dailyactivities': [
+        {}, {}, {}
+      ],
+      'weeklyactivites': [
+        {}, {}, {}
+      ]
+    },
+  'related': {
+    'relatedactivities': [
+      {
+        groupname: '',
+        activities: [
+          {}, {}, {}
+        ]
+      },
+      {
+        groupname: '',
+        activities: [
+          {}, {}, {}
+        ]
+      },
+    ]
+  }
+}
+
+Notes
+- what is typeof and keyof in ts
+- what is !variable in ts or js
+- review this in ts <Response<User>, RegistrationData>
+- I need to add max characters for the description, and all other fields
+- See the problem with the input components
+- See the problems with the add group form the error text
+- See the global types and add them to the types folder(maybe creating general.ts)
+- delete any from state:any
+- maybe I will not need to store the username, email, _id in the store we will need
+  accessToken only
+- I will use localStorage, Cookies to store user data
+- add the first option in the group as the default group
+- adding the images in to the features page with the correct width
+- handling refresh token I need to use mutex or another methology to redirect the user
+  when the refresh token expires
+- adding delete account permently
+
+
+In Home and Features if the user is authenticated we will change the start here button
+to My Activities
+
+What I will do next 
+  - Login and logout see how would I will store the refresh token in the client browser
+    ( I may use Gemini for that)
+  - why when the page refresh we lose the accessToken and isAuthenticated from the store
+
+
+
+I have this RTK to request from the backend private routes '' export const activityApi = createApi({
+  reducerPath: 'activities',
+  tagTypes: ['activities', 'groupActivities'],
+  baseQuery: fetchBaseQuery({ 
+    baseUrl: 'http://localhost:3500',
+    prepareHeaders: (headers) => {
+      const accessToken = Cookies.get("accessToken");
+
+      if (accessToken) {
+        headers.set('Authorization', `Bearer ${accessToken}`);
+      }
+      return headers;
+    }
+  }), '' I want when if the access token is expires my application will send a request to this point
+   'http://localhost:3500/refresh' to get a new access token. This is the code of the refresh controller
+   '' const handleRefreshToken = async (req, res) => {
+    const cookies = req.cookies;
+    if (!cookies?.jwt) return res.sendStatus(401);
+    const refreshToken = cookies.jwt;
+
+    const foundUser = await User.findOne({ refreshToken }).exec();
+    if (!foundUser) return res.sendStatus(403); 
+    
+    jwt.verify(
+        refreshToken,
+        process.env.REFRESH_TOKEN_SECRET,
+        (err, decoded) => {
+            if (err || foundUser.email !== decoded.email) return res.sendStatus(403);
+            const roles = Object.values(foundUser.roles);
+            const accessToken = jwt.sign(
+                {
+                    "UserInfo": {
+                        "email": decoded.email,
+                        "roles": roles
+                    }
+                },
+                process.env.ACCESS_TOKEN_SECRET,
+                { expiresIn: '10s' }
+            );
+            res.json({ roles, accessToken })
+        }
+    );
+} ''
+
+I have created an app called SimpliyfyMe for this app I have designed the interfaces 
+and the database collections and of the things to get it done in this app I have used the
+following frontend technologies (React with TypeScript, Redux toolkit, RTK Query, styled-components, 
+Yup and Formik) and for the backend I have used (Nodejs, Expressjs, MongoDB, and JWT for 
+authentication) There are mutiple other packages I have used but I don't think that I need to mention
+then like uuid, cookie-parser, js-cookie, bycryptjs, cors.
+This app is for organizing life, it allow users to enter their activities and the activities date and 
+time the when the user want to add an activity there are for types of activities daily, weekly, general,
+and related activities (in related activities the user can add group and add all his activities belong
+to the group) the user can GET, DELETE, UPDATE, POST, activities and groupnames. There are login and sign
+up functionlity in this app as well.
+Now what I want from you is that I want to add this project to my resume to be the only or maybe I will
+add another one to my resume I want you to give the text passage that I will copy and paste to my resume
+the app will be uploaded so use fake url like https://example.com as the url of the app
