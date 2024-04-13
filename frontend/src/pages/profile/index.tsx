@@ -14,6 +14,7 @@ import Button from "src/components/Button";
 import { useContext } from "react";
 import { AppContext } from "src/AppLoader";
 import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "src/state/store";
 import { logout } from "src/state/user";
 import { useLogoutQuery } from "src/data/auth";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +22,7 @@ import { useNavigate } from "react-router-dom";
 const Profile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state:any) => state.user);
+  const user = useSelector((state:RootState) => state.user);
   
   const {showLogoutBox, setShowLogoutBox} = useContext(AppContext);
 
@@ -32,10 +33,7 @@ const Profile = () => {
       dispatch(logout());
       localStorage.clear();
       navigate('/')
-    }else {
-      console.log(data)
     }
-
   }
 
   return (

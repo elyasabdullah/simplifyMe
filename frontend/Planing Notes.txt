@@ -110,23 +110,6 @@ let obj = {
   }
 }
 
-Notes
-- what is typeof and keyof in ts
-- what is !variable in ts or js
-- review this in ts <Response<User>, RegistrationData>
-- I need to add max characters for the description, and all other fields
-- See the problem with the input components
-- See the problems with the add group form the error text
-- See the global types and add them to the types folder(maybe creating general.ts)
-- delete any from state:any
-- maybe I will not need to store the username, email, _id in the store we will need
-  accessToken only
-- I will use localStorage, Cookies to store user data
-- add the first option in the group as the default group
-- adding the images in to the features page with the correct width
-- handling refresh token I need to use mutex or another methology to redirect the user
-  when the refresh token expires
-- adding delete account permently
 
 
 In Home and Features if the user is authenticated we will change the start here button
@@ -197,3 +180,15 @@ up functionlity in this app as well.
 Now what I want from you is that I want to add this project to my resume to be the only or maybe I will
 add another one to my resume I want you to give the text passage that I will copy and paste to my resume
 the app will be uploaded so use fake url like https://example.com as the url of the app
+
+Notes 
+Things I need to perform
+- I need to add max characters for the description, and all other fields
+- See the problem with the input components
+- See the problems with the add group form the error text
+- See the global types and add them to the types folder(maybe creating general.ts)
+- add the first option in the group as the default group
+- handling refresh token I need to use mutex or another methology to redirect the user
+  when the refresh token expires
+- adding delete account permently
+

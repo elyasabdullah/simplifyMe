@@ -26,7 +26,7 @@ export async function refreshAccessToken() {
     }
     const data = await response.json();
     const { accessToken } = data;
-    Cookies.set('accessToken', accessToken); // Update the access token in cookies
+    Cookies.set('accessToken', accessToken);
     return accessToken;
   } catch (error) {
     console.error('Error refreshing token:', error);

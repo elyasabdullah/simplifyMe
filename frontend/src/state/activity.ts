@@ -6,7 +6,7 @@ interface IintialState {
   date: string,
   time: string,
   completed: boolean,
-  groupName?: string
+  groupName: string | null 
 }
 const initialState: IintialState = {
   activityId: '',

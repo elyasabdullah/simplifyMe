@@ -42,8 +42,6 @@ const Login = () => {
   return (
     <ParentContainer>
       <Conatainer>
-      <>"email": "21160060@su.edu.ye",
-  "pwd": "123!@#abcABC"</>
       <TextInput 
           id="email" 
           label="Email"

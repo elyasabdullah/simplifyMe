@@ -6,18 +6,18 @@ import Timer from '../../components/timer';
 import { useCheckCodeMutation, useSendOTPMutation} from "src/data/auth";
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/state/store';
 
 
 const OTP = () => {
-  const user = useSelector((state:any) => state.user);
+  const user = useSelector((state:RootState) => state.user);
   const [pinCode, setPinCode] = useState<string>("");
   const [timeRemaining, setTimeRemaining] = useState(120);
   const [resendCode, setResendCode] = useState<Boolean>(false);
   const [verifyOtp, {error, isSuccess}] = useCheckCodeMutation();
   const [sendOTP] = useSendOTPMutation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const onChangePinCode = (pin: string) => {
     setPinCode(pin);

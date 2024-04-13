@@ -8,9 +8,7 @@ interface Iprops {
   id: string
   label: string;
   onChange: (value: string, name: string) => void;
-  type?: "select";
   isDisabled?: boolean;
-  placeholder?: string;
   error?: string | undefined;
   value: string | undefined;
   required?: boolean;
@@ -25,12 +23,10 @@ interface Iprops {
 const SelectInput = ({
   label,
   onChange,
-  type,
   isDisabled = false,
   value,
   required = false,
   error,
-  placeholder,
   autoComplete = "off",
   onFocus,
   onBlur,
@@ -45,13 +41,11 @@ const SelectInput = ({
         onChange={(e: { target: { value: string, name: string } }) =>
         onChange(e.target.value, e.target.name)
         }
-        type ={type}
-        isDisabled = {false}
+        disabled = {false}
         value = {value}
         required = {required}
-        placeholder= {placeholder || ''}
         autoComplete = "off"
-        onfocus = {(e: { target: { name: string } }) => onFocus && onFocus(e?.target?.name ?? '')}
+        onFocus = {(e: { target: { name: string } }) => onFocus && onFocus(e?.target?.name ?? '')}
         onBlur = {onBlur}
         name = {name}
       >

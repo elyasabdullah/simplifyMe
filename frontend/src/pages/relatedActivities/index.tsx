@@ -17,6 +17,7 @@ import {
   GroupInputCon
 } from './styles';
 import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from 'src/state/store';
 import { logout } from 'src/state/user';
 import { useNavigate } from 'react-router-dom';
 
@@ -24,14 +25,14 @@ const RelatedActivities = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
     
-  const userId = useSelector((state: any) => state.user._id)
+  const userId = useSelector((state: RootState) => state.user._id)
   const [refresh, setRefresh] = useState(false);
   const [refetchGroups, setRefetchGroups] = useState(false);
   const [groupAndActivities, setGroupAndActivities] = useState({
     groupName: "", 
   })
   
-  const storeGroupName = useSelector((state:any) => state.activityGroup);
+  const storeGroupName = useSelector((state:RootState) => state.activityGroup);
 
   useEffect(() => {
     if(storeGroupName.groupName) {
@@ -76,7 +77,6 @@ const RelatedActivities = () => {
   const handleHideGroupForm = () => {
     setHideForm2(!hideForm2)
   }
-  const [showDeleteBox, setShowDeleteBox] = useState(false);
 
   let content;
   if(isLoading) {

@@ -10,13 +10,14 @@ import TasksGrid from 'src/components/tasksGrid';
 import { useState, useEffect } from 'react';
 import { useGetActivitiesQuery } from 'src/data/activity';
 import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from 'src/state/store';
 import { logout } from 'src/state/user';
 import { useNavigate } from 'react-router-dom';
 
 const GeneralActivities = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userId = useSelector((state: any) => state.user._id)
+  const userId = useSelector((state: RootState) => state.user._id)
   const [refresh, setRefresh] = useState(false)
 
   const [taskType, setTaskType] = useState({

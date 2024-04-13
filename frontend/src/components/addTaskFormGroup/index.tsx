@@ -6,6 +6,7 @@ import SelectInput from "../selectInput";
 import Button from "../Button";
 import { useCreateActivityMutation } from "src/data/activity";
 import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "src/state/store";
 import { useUpdateActivityMutation } from "src/data/activity";
 import useCreateNewActivity from "src/hooks/useCreateNewActivity";
 import React, {useEffect, useState} from "react";
@@ -23,8 +24,8 @@ interface Iprops {
 
 const AddTaskFormGroup = (props:Iprops) => {
   const dispatch = useDispatch();
-  const data = useSelector((state:any) => state.activity);
-  const userId = useSelector((state: any) => state.user._id)
+  const data = useSelector((state:RootState) => state.activity);
+  const userId = useSelector((state: RootState) => state.user._id)
 
   const {data: groupNames, isError: isErrorG, error: errorG, isSuccess: isSuccessG, refetch} = 
   useGetGroupNamesQuery({userId: userId});
@@ -44,7 +45,7 @@ const AddTaskFormGroup = (props:Iprops) => {
       userId: userId ,
       description: '',
       date: '',
-      time: ''
+      time: '',
     }},
     
   );
@@ -89,16 +90,13 @@ const AddTaskFormGroup = (props:Iprops) => {
     resetForm();
     dispatch(emptyFormActivity());
   }
-  // console.log(values)
   return (
     <Container className={props.hidden ? 'hide': ''}>
       <SelectInput  
         id="taskgroup"
         label="Task Group"
-        type="select"
         onChange={(value) => handleChange(value ?? '', 'groupName')}
         value={values.groupName}
-        placeholder=""
         error={getError('groupName')}
         data={selectOptions}
       >

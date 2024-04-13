@@ -5,9 +5,10 @@ import { MoreInfoSection } from "./sections/second";
 import LastSection from "./sections/third";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { RootState } from "src/state/store";
 
 const Home = () => {
-  const isAuthenticated = useSelector((state:any) => state.user.isAuthenticated);
+  const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
   const navigate = useNavigate();
   return (
     <>

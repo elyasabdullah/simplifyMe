@@ -7,8 +7,8 @@ import darkTheme from './themes/darkTheme';
 import Theme from './types/theme';
 import GlobalStyle from './GlobalStyle';
 import { Container } from './styles';
-import { useSelector, useDispatch } from 'react-redux';
-import { logout } from './state/user';
+import { useSelector} from 'react-redux';
+import { RootState } from './state/store';
 
 
 interface IThemeContext {
@@ -32,23 +32,13 @@ export const AppContext = createContext<IThemeContext>({
 })
 
 const AppLoader = () => {
-  const dispatch = useDispatch();
-  // dispatch(logout());
-  const isAuthenticated = useSelector((state:any) => state.user.isAuthenticated)
-  const [auth, setAuth] = useState(isAuthenticated);
-  const user = useSelector((state:any) => state.user);
+  const isAuthenticated = useSelector((state:RootState) => state.user.isAuthenticated)
 
   const [theme, setTheme] = useState(darkTheme);
   const [showNavbarList, setShowNavbarList] = useState(false);
   const [showLogoutBox, setShowLogoutBox] = useState(false);
   
   let element = isAuthenticated ? <PrivateRoutes/> : <UnAuthenticatedRoutes/>;
-  // useEffect(() => {
-  //   if(!isAuthenticated) {
-  //     dispatch(logout());
-  //   }
-  //   element = isAuthenticated ? <PrivateRoutes/> : <UnAuthenticatedRoutes/>
-  // }, [isAuthenticated])
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === lightTheme ? darkTheme : lightTheme));

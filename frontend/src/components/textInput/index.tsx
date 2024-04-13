@@ -46,12 +46,12 @@ const TextInput = ({
           onChange(e.target.value, e.target.name)
         }
         type ={type}
-        isDisabled = {false}
+        disabled = {false}
         value = {value}
         required = {required}
         placeholder= {placeholder || ''}
         autoComplete = "off"
-        onfocus = {(e: { target: { name: string } }) => onFocus && onFocus(e?.target?.name ?? '')}
+        onFocus = {(e: { target: { name: string } }) => onFocus && onFocus(e?.target?.name ?? '')}
         onBlur = {onBlur}
         name = {name}
       />

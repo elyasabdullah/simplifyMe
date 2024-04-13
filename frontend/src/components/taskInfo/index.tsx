@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react"
 import { 
   TaskContainer, 
   TaskDate,
@@ -15,6 +14,7 @@ import { useGetActivityQuery } from "src/data/activity";
 import { useDeleteActivityMutation } from "src/data/activity";
 import { useMarkCompletedMutation } from "src/data/activity";
 import { useDispatch, useSelector} from "react-redux";
+import { RootState } from "src/state/store";
 import { setFormActivity } from "src/state/activity";
 
 interface Iprops {
@@ -32,7 +32,7 @@ interface Iprops {
 
 const TaskInfo = (props:Iprops) => {
   const dispatch = useDispatch();
-  const userId = useSelector((state: any) => state.user._id);
+  const userId = useSelector((state: RootState) => state.user._id);
 
   const {data, isSuccess, error: fetchError} = useGetActivityQuery(
     {userId: userId,activityId: props.taskId, activityType: props.activitiesType.activityType, 
@@ -41,8 +41,6 @@ const TaskInfo = (props:Iprops) => {
   const [deleteActivity, {isError, error}] = useDeleteActivityMutation();
 
   const [markCompleted] = useMarkCompletedMutation();
-
-  // const [completed, setCompleted] = useState(false);
 
   const handleEditActivity = () => {
     props.setHideEditInfo(false);

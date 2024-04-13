@@ -13,8 +13,8 @@ import {
 } from './styles';
 import TaskInfo from '../taskInfo';
 import { useDeleteGroupWithItsActivitiesMutation } from 'src/data/activity';
-// import { useModifyGroupNameMutation } from 'src/data/activity';
 import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'src/state/store';
 import { setFormActivityGroup, emptyFormActivityGroup } from 'src/state/activityGroup';
 import React from 'react';
 
@@ -42,9 +42,8 @@ interface Iprops {
 
 const GroupedTasksGrid = (props:Iprops) => {
   const dispatch = useDispatch();
-  const userId = useSelector((state: any) => state.user._id)
+  const userId = useSelector((state: RootState) => state.user._id)
   const [deleteGroupWithItsActivities, {isSuccess, isError}] = useDeleteGroupWithItsActivitiesMutation();
-  // const [modifyGroupNameMutation] = useModifyGroupNameMutation();
   const handleEditGroup = (value:string) => {
     dispatch(setFormActivityGroup({groupName: value}))
     props.setHideFormGroup(false);
@@ -64,8 +63,7 @@ const GroupedTasksGrid = (props:Iprops) => {
       props.setGroupAndActivities({groupName: value})
     }
   }
-  // const groupNamedata = useSelector((state:any) => state.activityGroup);
-  // console.log(groupNamedata);
+  
 
   const tasks = props.groupdata.map((task, index) => {
     return (
