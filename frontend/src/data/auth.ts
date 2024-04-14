@@ -1,8 +1,9 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import { REACT_APP_API_URL } from 'src/env/index';
+
+const apiURL = import.meta.env.VITE_APP_API_URL;
 
 export const authApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: `${REACT_APP_API_URL}`,
+  baseQuery: fetchBaseQuery({ baseUrl: `${apiURL}`,
     credentials: "include"
   }),
   reducerPath: 'register',

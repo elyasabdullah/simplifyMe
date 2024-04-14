@@ -1,5 +1,6 @@
 import Cookies from "js-cookie";
-import { REACT_APP_API_URL } from "src/env/index";
+
+const apiURL = import.meta.env.VITE_APP_API_URL;
 
 export function decodeAccessToken(accessToken:string) {
   try {
@@ -17,7 +18,7 @@ export function decodeAccessToken(accessToken:string) {
 
 export async function refreshAccessToken() {
   try {
-    const response = await fetch(`${REACT_APP_API_URL}/refresh`, {
+    const response = await fetch(`${apiURL}/refresh`, {
       method: 'GET',
       credentials: 'include', 
     });

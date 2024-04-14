@@ -1,13 +1,14 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import Cookies from 'js-cookie';
 import { decodeAccessToken, refreshAccessToken } from './utiles';
-import { REACT_APP_API_URL } from 'src/env/index';
+
+const apiURL = import.meta.env.VITE_APP_API_URL;
 
 export const activityApi = createApi({
   reducerPath: 'activities',
   tagTypes: ['activities', 'groupActivities'],
   baseQuery: fetchBaseQuery({ 
-  baseUrl: `${REACT_APP_API_URL}`,
+  baseUrl: `${apiURL}`,
     prepareHeaders: async (headers) => {
       const accessToken = Cookies.get("accessToken");
       
