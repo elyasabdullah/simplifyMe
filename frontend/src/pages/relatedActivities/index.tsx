@@ -83,7 +83,7 @@ const RelatedActivities = () => {
     content = <p>Loading...</p>
   }else if(isError) {
     const err = error as any
-    if(err.data == 'Forbidden'){
+    if(err.data == 'Forbidden' || err.message == 'Failed to refresh token'){
       dispatch(logout());
       navigate('/');
     }
@@ -99,6 +99,8 @@ const RelatedActivities = () => {
       setHideFormGroup = {setHideForm2}
       groupAndActivities={groupAndActivities}
       setGroupAndActivities={setGroupAndActivities}
+      refetchGroups={refetchGroups}
+      setRefetchGroups={setRefetchGroups}
     />
     
   }

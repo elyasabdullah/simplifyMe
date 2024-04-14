@@ -5,7 +5,7 @@ const handleRefreshToken = async (req, res) => {
     // const cookie = req.headers.cookie;
     // const refreshToken = cookie && cookie.split('jwt=')[1];
     const refreshToken = req.cookies.jwt;
-
+    console.log(refreshToken)
     if (!refreshToken) return res.sendStatus(401);
 
     const foundUser = await User.findOne({ refreshToken: refreshToken }).exec();
@@ -23,7 +23,7 @@ const handleRefreshToken = async (req, res) => {
                 }
             },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '10s' }
+            { expiresIn: '15m' }
         );
 
         res.json({ roles, accessToken });

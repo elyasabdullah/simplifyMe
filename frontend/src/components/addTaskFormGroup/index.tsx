@@ -10,7 +10,7 @@ import { RootState } from "src/state/store";
 import { useUpdateActivityMutation } from "src/data/activity";
 import useCreateNewActivity from "src/hooks/useCreateNewActivity";
 import React, {useEffect, useState} from "react";
-import { emptyFormActivity } from "src/state/activity";
+import { emptyFormActivity, setGroupName } from "src/state/activity";
 import { useGetGroupNamesQuery } from "src/data/activity";
 
 interface Iprops {
@@ -52,8 +52,8 @@ const AddTaskFormGroup = (props:Iprops) => {
 
   useEffect(() => {
     refetch();
-  }, [props.refetchGroups]);
-
+  }, [props.refetchGroups, groupNames]);
+  
   let selectOptions: string[] = [];
 
   if(!errorG && isSuccessG) {
@@ -67,14 +67,32 @@ const AddTaskFormGroup = (props:Iprops) => {
       handleChange(data.description, 'description');
       handleChange(data.date, 'date');
       handleChange(data.time, 'time');
-      handleChange(data.groupName, 'groupName')
+      handleChange(data.groupName, 'groupName');
     }
   }, [data])
 
+  useEffect(() => {
+    if(window.localStorage.getItem('groupName')) {
+      dispatch(setGroupName(window.localStorage.getItem('groupName')));
+      handleChange(window.localStorage.getItem('groupName'), 'groupName')
+    }
+  }, []);
+  
+  useEffect(() => {
+    if(values.groupName) {
+      window.localStorage.setItem('groupName', values.groupName);
+    }
+    dispatch(setGroupName(window.localStorage.getItem('groupName')));
+  }, [values.groupName])
+  
+  const [refresh, setRefresh] = useState(false);
   const handleSubmit = () => {
+    setRefresh(!refresh);
     dispatch(emptyFormActivity());
     onSubmit();
+    handleChange(window.localStorage.getItem('groupName'), 'groupName');
   }
+
   const handleModifications = () => {
     updateActivity({
       userId: userId, 
@@ -90,6 +108,7 @@ const AddTaskFormGroup = (props:Iprops) => {
     resetForm();
     dispatch(emptyFormActivity());
   }
+  
   return (
     <Container className={props.hidden ? 'hide': ''}>
       <SelectInput  
@@ -141,6 +160,7 @@ const AddTaskFormGroup = (props:Iprops) => {
         text="Add modifications" 
         onClick={handleModifications}
         />}
+        {isError && <div style={{color:"red", padding:'10px 0'}}>Groupname and description are required</div>}
     </Container>
   )
 }

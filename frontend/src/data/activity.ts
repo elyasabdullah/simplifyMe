@@ -1,13 +1,13 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import Cookies from 'js-cookie';
 import { decodeAccessToken, refreshAccessToken } from './utiles';
-
+import { REACT_APP_API_URL } from 'src/env/index';
 
 export const activityApi = createApi({
   reducerPath: 'activities',
   tagTypes: ['activities', 'groupActivities'],
   baseQuery: fetchBaseQuery({ 
-    baseUrl: 'http://localhost:3500',
+  baseUrl: `${REACT_APP_API_URL}`,
     prepareHeaders: async (headers) => {
       const accessToken = Cookies.get("accessToken");
       
@@ -27,8 +27,8 @@ export const activityApi = createApi({
         headers.set('Authorization', `Bearer ${refreshedToken}`);
         Cookies.set('accessToken', refreshedToken);
       } catch (error) {
-        
-        console.error('Failed to refresh token:', error);
+        console.log(error)
+        throw error
       }
       
       return headers;

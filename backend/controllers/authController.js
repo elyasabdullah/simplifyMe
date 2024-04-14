@@ -24,12 +24,12 @@ const handleLogin = async (req, res) => {
 				}
 			},
 			process.env.ACCESS_TOKEN_SECRET,
-			{ expiresIn: '10s' }
+			{ expiresIn: '15m' }
 		);
 		const refreshToken = jwt.sign(
 				{ "email": foundUser.email },
 				process.env.REFRESH_TOKEN_SECRET,
-				{ expiresIn: '120m' }
+				{ expiresIn: '30d' }
 		);
 		
 		foundUser.refreshToken = refreshToken;
@@ -38,7 +38,7 @@ const handleLogin = async (req, res) => {
 			httpOnly: true, 
 			sameSite: "None",
 			secure: true,
-			maxAge: 1000 * 60 * 15});
+			maxAge: 30 * 24 * 60 * 60 * 1000});
 		
 		const {username, email, _id} = foundUser 
 		res.json({_id, username, email, accessToken });

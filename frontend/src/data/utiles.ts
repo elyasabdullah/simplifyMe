@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import { REACT_APP_API_URL } from "src/env/index";
 
 export function decodeAccessToken(accessToken:string) {
   try {
@@ -16,20 +17,21 @@ export function decodeAccessToken(accessToken:string) {
 
 export async function refreshAccessToken() {
   try {
-    
-    const response = await fetch('http://localhost:3500/refresh', {
+    const response = await fetch(`${REACT_APP_API_URL}/refresh`, {
       method: 'GET',
       credentials: 'include', 
     });
+    
     if (!response.ok) {
       throw new Error('Failed to refresh token');
     }
+
     const data = await response.json();
+    
     const { accessToken } = data;
     Cookies.set('accessToken', accessToken);
     return accessToken;
   } catch (error) {
-    console.error('Error refreshing token:', error);
     throw error;
   }
 }

@@ -37,7 +37,9 @@ interface Iprops {
   setRefresh: React.Dispatch<React.SetStateAction<boolean>>,
   activitiesType: {activityType: string, generalType: string},
   groupAndActivities: {groupName: string},
-  setGroupAndActivities: React.Dispatch<React.SetStateAction<{groupName: string}>>
+  setGroupAndActivities: React.Dispatch<React.SetStateAction<{groupName: string}>>,
+  refetchGroups: boolean,
+  setRefetchGroups: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const GroupedTasksGrid = (props:Iprops) => {
@@ -61,6 +63,7 @@ const GroupedTasksGrid = (props:Iprops) => {
     deleteGroupWithItsActivities({userId: userId, groupName: value})
     if(isSuccess) {
       props.setGroupAndActivities({groupName: value})
+      props.setRefetchGroups(!props.refetchGroups)
     }
   }
   

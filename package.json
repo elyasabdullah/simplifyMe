@@ -1,25 +1,14 @@
 {
-  "name": "experiment-node",
+  "name": "simplifyme",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node server",
-    "dev": "node server"
+    "install-server": "cd backend && npm install",
+    "start-server": "cd backend && node server.js",
+    "build-client": "cd frontend && npm run dev",
+    "start-client": "cd frontend && npm run dev"
   },
-  "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "cookie-parser": "^1.4.6",
-    "cors": "^2.8.5",
-    "date-fns": "^2.30.0",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "jsonwebtoken": "^9.0.1",
-    "mongoose": "^7.4.1",
-    "postmark": "^4.0.2",
-    "uuid": "^9.0.0"
-  }
+  "license": "ISC"
 }

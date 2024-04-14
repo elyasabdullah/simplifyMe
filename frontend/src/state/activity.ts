@@ -34,9 +34,12 @@ const activitySlice = createSlice({
       state.date = "",
       state.time = "",
       state.groupName = ""
+    },
+    setGroupName: (state, action) => {
+      state.groupName = action.payload
     }
   }
 })
 
-export const { setFormActivity, emptyFormActivity } = activitySlice.actions;
+export const { setFormActivity, emptyFormActivity, setGroupName } = activitySlice.actions;
 export default activitySlice.reducer;
