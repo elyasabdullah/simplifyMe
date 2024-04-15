@@ -1,5 +1,5 @@
 const allowedOrigins = [
-    'https://simplifyme.onrender.com',
+    'https://simplify-me.vercel.app/',
     'http://localhost:3000'
 ];
 
