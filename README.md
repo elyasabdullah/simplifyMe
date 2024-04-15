@@ -25,6 +25,7 @@ SimplifyMe is a productivity app designed to help users organize their activitie
 - **Grouping Activities**: SimplifyMe allows users to group related activities together, making it easier to manage and organize tasks.
 - **Group Names**: Users can manage group names to categorize and label their activities effectively.
 - **Authentication**: SimplifyMe provides user authentication features, including login and signup functionality, to secure user data and access.
+  In the app we use OTP to verify the user email
 
 ## Usage
 
@@ -37,13 +38,23 @@ SimplifyMe is a productivity app designed to help users organize their activitie
 ## Installation
 
 To run SimplifyMe locally, follow these steps:
-
-1. Clone the repository: `git clone <repository-url>`
-2. Navigate to the project directory: `cd SimplifyMe`
-3. Install dependencies for both frontend and backend: `npm install`
-4. Start the backend server: `npm start` or `node server.js`
-5. Start the frontend development server: `npm start`
-6. Access the application in your browser at `http://localhost:3000`
+- Clone the repository: `git clone <repository-url>`
+- Create .env files inside both the frontend and backend folders and add the required variables for the frontend you need to add VITE_APP_API_URL
+  and for the backend you need to add the following variables:
+  - ACCESS_TOKEN_SECRET
+  - REFRESH_TOKEN_SECRET
+  - DATABASE_URI
+  - EMAIL_FROM
+  - NO_REPLY_EMAIL_ADDRESS
+  - POSTMARK_SERVER_TOKEN
+### Running the frontend
+- Navigate to the project directory: `cd SimplifyMe/frontend`
+- Install dependencies frontend: `npm install`
+- Run the frontend: `npm run dev`
+### Running the backend
+- Navigate to the project directory: `cd SimplifyMe/backend`
+- Install dependencies frontend: `npm install`
+- Run the frontend: `npm run dev`
 
 ## Feedback
 
