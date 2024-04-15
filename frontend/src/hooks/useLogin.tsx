@@ -11,9 +11,9 @@ type props = {
 const useLogin = ({onSubmitForm, initialState}: props) => {
 
   const loginScheme = Yup.object({
-    pwd: Yup.string().required("your password is required"),
+    pwd: Yup.string().trim().required("your password is required"),
     // .matches(passwordRules, {message: "Please create a stronger password"}),
-    email: Yup.string().email("please enter a valid email").required("Email is required") 
+    email: Yup.string().trim().email("please enter a valid email").required("Email is required") 
   })
 
   const formik = useFormik<Partial<LoginRequest>>({

@@ -10,8 +10,8 @@ const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}$/;
 
 const useSignUp = ({onSumitForm, initialState}: Iprops) => {
   const signUpSheme = Yup.object({
-    username: Yup.string().required("Please enter your name"),
-    password: Yup.string().required("your password is required")
+    username: Yup.string().trim().required("Please enter your name"),
+    password: Yup.string().trim().required("your password is required")
     .matches(passwordRules, {message: "Please create a stronger password"}),
     email: Yup.string().email("please enter a valid email").required("Please enter your email")
   })
