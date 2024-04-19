@@ -46,7 +46,6 @@ const Login = () => {
   return (
     <ParentContainer>
       <Conatainer>
-      <>123!@#abcABC aelyas602@gmail.com</>
       <TextInput 
           id="email" 
           label="Email"
