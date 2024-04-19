@@ -7,8 +7,10 @@ import darkTheme from './themes/darkTheme';
 import Theme from './types/theme';
 import GlobalStyle from './GlobalStyle';
 import { Container } from './styles';
-import { useSelector} from 'react-redux';
+import { useSelector, useDispatch} from 'react-redux';
 import { RootState } from './state/store';
+import { refreshAccessToken } from './data/utiles';
+import { setAuthenticated } from './state/user';
 
 
 interface IThemeContext {
@@ -31,14 +33,34 @@ export const AppContext = createContext<IThemeContext>({
   setShowLogoutBox: () => {}
 })
 
+const apiURL = import.meta.env.VITE_APP_API_URL;
+
 const AppLoader = () => {
+  const dispatch = useDispatch();
   const isAuthenticated = useSelector((state:RootState) => state.user.isAuthenticated)
+  const userData = useSelector((state:RootState) => state.user)
 
   const [theme, setTheme] = useState(darkTheme);
   const [showNavbarList, setShowNavbarList] = useState(false);
   const [showLogoutBox, setShowLogoutBox] = useState(false);
   
   let element = isAuthenticated ? <PrivateRoutes/> : <UnAuthenticatedRoutes/>;
+
+  useEffect(() => {
+    const refreshToken = async () => {
+      const data = await refreshAccessToken(apiURL);
+      if(data) {
+        dispatch(setAuthenticated(true));
+        console.log(data);
+      }else {
+        dispatch(setAuthenticated(false));
+        console.log(userData);
+      }
+    }
+    refreshToken();
+    
+    // When the refresh token end up while the user is logged in what we will do
+  }, [isAuthenticated])
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === lightTheme ? darkTheme : lightTheme));

@@ -1,7 +1,5 @@
 import Cookies from "js-cookie";
 
-const apiURL = import.meta.env.VITE_APP_API_URL;
-
 export function decodeAccessToken(accessToken:string) {
   try {
     const tokenParts = accessToken.split('.');
@@ -16,15 +14,15 @@ export function decodeAccessToken(accessToken:string) {
   }
 }
 
-export async function refreshAccessToken() {
+export async function refreshAccessToken(url:string) {
   try {
-    const response = await fetch(`${apiURL}/refresh`, {
+    const response = await fetch(`${url}/refresh`, {
       method: 'GET',
       credentials: 'include', 
     });
     
     if (!response.ok) {
-      throw new Error('Failed to refresh token');
+      return false;
     }
 
     const data = await response.json();

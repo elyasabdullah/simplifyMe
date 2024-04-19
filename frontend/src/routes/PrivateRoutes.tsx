@@ -15,7 +15,7 @@ const PrivateRoutes = () => {
     <Container>
       <Routes>
         <Route element={<PrivateLayout/>}>
-        <Route 
+          <Route 
             path="/"
             element={<Home/>}
           />

@@ -1,4 +1,2 @@
-export const BaseUrl = import.meta.env.DEV
-  ? "https://test.carwash.lumaa-alibda.com/api/"
-  : "https://test.carwash.lumaa-alibda.com/api/"; //change this to prod url
-
+const VITE_APP_API_URL = 'http://localhost:3500'
+const VITE_APP_API_URL2 = 'https://simplifyme-be.onrender.com'

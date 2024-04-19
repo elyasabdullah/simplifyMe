@@ -85,7 +85,7 @@ const RelatedActivities = () => {
     const err = error as any
     if(err.data == 'Forbidden' || err.message == 'Failed to refresh token'){
       dispatch(logout());
-      navigate('/');
+      navigate('/login');
     }
     content = <p>{`Enternal Server Error`}</p>
   }else if(isSuccess) {

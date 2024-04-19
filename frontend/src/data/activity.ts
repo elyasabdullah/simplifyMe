@@ -24,7 +24,7 @@ export const activityApi = createApi({
       }
 
       try {
-        const refreshedToken = await refreshAccessToken();
+        const refreshedToken = await refreshAccessToken(apiURL);
         headers.set('Authorization', `Bearer ${refreshedToken}`);
         Cookies.set('accessToken', refreshedToken);
       } catch (error) {

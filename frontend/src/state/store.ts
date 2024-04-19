@@ -1,6 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { authApi } from "src/data/auth";
-// import { activityApi } from "src/data/activitys";
 import userSlice from './user';
 import activitySlice from './activity';
 import activityGroupSlice from './activityGroup';

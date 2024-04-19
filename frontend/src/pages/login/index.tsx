@@ -12,7 +12,7 @@ import Cookies from "js-cookie";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [login, {error, isLoading, isSuccess, data}] = useLoginMutation();
+  const [login, {error, isLoading, isError, isSuccess, data}] = useLoginMutation();
   
   const {values, onSubmit, getError, handleChange, errors} = useLogin({
     onSubmitForm: (data) => login({...data}), 
@@ -21,12 +21,11 @@ const Login = () => {
       pwd: ""
     }});
 
-    const [loginError, setLoginError] = useState(false);
+    const [errorMsg, setError] = useState('');
 
     useEffect(() => {
       if (isSuccess && data) {
           dispatch(setUser({...data, isAuthenticated: true}));
-          setLoginError(false);
           localStorage.setItem('user', JSON.stringify({
             username: data.username,
             email: data.email,
@@ -34,14 +33,20 @@ const Login = () => {
           }));
           Cookies.set("accessToken", data.accessToken);
           navigate('/')
-      }else if(error) {
-        setLoginError(true);
+      }else if(isError) {
+        let err: any = error
+        if(err?.status == 500) {
+          setError('Internal Server Error')
+        }else {
+          setError('User Not Found');
+        }
       }
     }, [error, isSuccess, data])
   
   return (
     <ParentContainer>
       <Conatainer>
+      <>123!@#abcABC aelyas602@gmail.com</>
       <TextInput 
           id="email" 
           label="Email"
@@ -61,7 +66,7 @@ const Login = () => {
           placeholder=""
           type="password"
         />
-        {loginError && <div style={{color: 'red', padding: '0.5rem 0'}}>User not found</div>}
+        {errorMsg && <div style={{color:'red', padding: '0.5rem 0'}}>{errorMsg}</div>}
         <Button onClick={onSubmit} text="Login" />
         <SignUpOption>
           Don't have an account 

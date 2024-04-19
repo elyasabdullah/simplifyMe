@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 const handleLogin = async (req, res) => {
 	const { email, pwd } = req.body;
-	if (!email || !pwd) return res.status(400).json({ 'message': 'Username and password are required.' });
+	if (!email || !pwd) return res.status(400).json({ 'message': 'User email and password are required.' });
 
 	const foundUser = await Users.findOne({ email: email }).exec();
 	if (!foundUser) return res.sendStatus(401).json({"message": "You should sign up first."}); 
@@ -24,7 +24,7 @@ const handleLogin = async (req, res) => {
 				}
 			},
 			process.env.ACCESS_TOKEN_SECRET,
-			{ expiresIn: '15m' }
+			{ expiresIn: '10s' }
 		);
 		const refreshToken = jwt.sign(
 				{ "email": foundUser.email },
@@ -38,7 +38,7 @@ const handleLogin = async (req, res) => {
 			httpOnly: true, 
 			sameSite: "None",
 			secure: true,
-			maxAge: 30 * 24 * 60 * 60 * 1000});
+			maxAge: 30 * 24 * 60 * 60 * 1000});// 30 * 24 * 60 * 60 * 1000
 		
 		const {username, email, _id} = foundUser 
 		res.json({_id, username, email, accessToken });
