@@ -51,10 +51,10 @@ const AppLoader = () => {
       const data = await refreshAccessToken(apiURL);
       if(data) {
         dispatch(setAuthenticated(true));
-        console.log(data);
+        
       }else {
         dispatch(setAuthenticated(false));
-        console.log(userData);
+        
       }
     }
     refreshToken();

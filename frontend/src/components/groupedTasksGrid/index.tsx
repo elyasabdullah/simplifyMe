@@ -16,7 +16,7 @@ import { useDeleteGroupWithItsActivitiesMutation } from 'src/data/activity';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'src/state/store';
 import { setFormActivityGroup, emptyFormActivityGroup } from 'src/state/activityGroup';
-import React from 'react';
+import{ useEffect, useState } from 'react';
 
 interface Iprops {
   groupdata: {
@@ -45,7 +45,7 @@ interface Iprops {
 const GroupedTasksGrid = (props:Iprops) => {
   const dispatch = useDispatch();
   const userId = useSelector((state: RootState) => state.user._id)
-  const [deleteGroupWithItsActivities, {isSuccess, isError}] = useDeleteGroupWithItsActivitiesMutation();
+  const [deleteGroupWithItsActivities, {isSuccess, isError, error}] = useDeleteGroupWithItsActivitiesMutation();
   const handleEditGroup = (value:string) => {
     dispatch(setFormActivityGroup({groupName: value}))
     props.setHideFormGroup(false);
@@ -59,14 +59,23 @@ const GroupedTasksGrid = (props:Iprops) => {
     props.setGroupAndActivities({groupName: ""})
   };
 
+  const [groupNameS, setGroupNameS] = useState('');
+  const [errorMsg, setError] = useState('');
+
   const handleDeleteGroup = (value: string)  => {
-    deleteGroupWithItsActivities({userId: userId, groupName: value})
-    if(isSuccess) {
-      props.setGroupAndActivities({groupName: value})
-      props.setRefetchGroups(!props.refetchGroups)
-    }
+    deleteGroupWithItsActivities({userId: userId, groupName: value});
+    setGroupNameS(value);
   }
   
+  useEffect(() => {
+    if(isSuccess) {
+      props.setGroupAndActivities({groupName: groupNameS})
+      props.setRefetchGroups(!props.refetchGroups);
+    }else if(isError) {
+      let err:any = error
+      setError(err.message);// need some changes
+    }
+  }, [isSuccess, isError])
 
   const tasks = props.groupdata.map((task, index) => {
     return (

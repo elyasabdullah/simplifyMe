@@ -9,7 +9,7 @@ interface Iprops {
 
 const useCreateNewGroup = ({onSubmitForm, initialState}:Iprops) =>{ 
   const activityScheme = Yup.object({
-    groupname:Yup.string().required("You need to add the group name"),
+    groupname:Yup.string().required("You need to add the group name").max(150, 'Max characters is 150 character'),
   })
  
   const formik = useFormik<Partial<Group>>({

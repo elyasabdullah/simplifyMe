@@ -131,14 +131,14 @@ const createNewActivity = async (req, res) => {
 
 const updateActivity = async (req, res) => {
   const { userId, activityId, activityType, groupName, description, date, time } = req.body;
-
+  
   if (!userId || !activityId || !activityType) {
     return res.status(400).json({ message: 'Missing userId, activityId, or activityType' });
   }
-
+  
   try {
     const activity = await Activity.findOne({ userId });
-
+    
     if (!activity) {
       return res.status(404).json({ message: 'Activity not found' });
     }
@@ -170,7 +170,7 @@ const updateActivity = async (req, res) => {
         if (!weeklyActivity) {
           return res.status(404).json({ message: 'WeeklyActivity not found' });
         }
-
+        
         weeklyActivity.description = description || weeklyActivity.description;
         weeklyActivity.date = date || weeklyActivity.date;
         weeklyActivity.time = time || weeklyActivity.time;
@@ -178,11 +178,11 @@ const updateActivity = async (req, res) => {
         const generalActivity = activity.activityType.General.GeneralActivities.find(
           (activity) => activity._id.toString() === activityId
         );
-
+        
         if (!generalActivity) {
           return res.status(404).json({ message: 'GeneralActivity not found' });
         }
-
+        
         generalActivity.description = description || generalActivity.description;
         generalActivity.date = date || generalActivity.date;
         generalActivity.time = time || generalActivity.time;
@@ -201,7 +201,7 @@ const updateActivity = async (req, res) => {
       if (!relatedActivity) {
         return res.status(404).json({ message: 'Related activity group not found' });
       }
-
+      
       const relatedActivityToUpdate = relatedActivity.activities.find(
         (activity) => activity._id.toString() === activityId
       );
@@ -246,39 +246,15 @@ const deleteActivity = async (req, res) => {
         return res.status(400).json({ message: 'Missing generalType for General activity' });
       }
 
-      if (generalType === 'DailyActivities') {
-        const dailyActivityIndex = activity.activityType.General.DailyActivities.findIndex(
-          (activity) => activity._id.toString() === activityId
-        );
+      const generalActivities = activity.activityType.General[generalType];
 
-        if (dailyActivityIndex === -1) {
-          return res.status(404).json({ message: 'DailyActivity not found' });
-        }
+      const activityIndex = generalActivities.findIndex(activity => activity._id.toString() === activityId);
 
-        activity.activityType.General.DailyActivities.splice(dailyActivityIndex, 1);
-      } else if (generalType === 'WeeklyActivities') {
-        const weeklyActivityIndex = activity.activityType.General.WeeklyActivities.findIndex(
-          (activity) => activity._id.toString() === activityId
-        );
-
-        if (weeklyActivityIndex === -1) {
-          return res.status(404).json({ message: 'WeeklyActivity not found' });
-        }
-
-        activity.activityType.General.WeeklyActivities.splice(weeklyActivityIndex, 1);
-      } else if (generalType === 'GeneralActivities') {
-        const generalActivityIndex = activity.activityType.General.GeneralActivities.findIndex(
-          (activity) => activity._id.toString() === activityId
-        );
-
-        if (generalActivityIndex === -1) {
-          return res.status(404).json({ message: 'GeneralActivity not found' });
-        }
-
-        activity.activityType.General.GeneralActivities.splice(generalActivityIndex, 1);
-      } else {
-        return res.status(400).json({ message: 'Invalid generalType' });
+      if (activityIndex === -1) {
+        return res.status(404).json({ message: `${generalType} activity not found` });
       }
+
+      generalActivities.splice(activityIndex, 1);
     } else if (activityType === 'Related') {
       const relatedActivities = activity.activityType.Related.RelatedActivities;
 
@@ -290,15 +266,13 @@ const deleteActivity = async (req, res) => {
           relatedActivity.activities.splice(activityIndex, 1);
 
           if (relatedActivity.activities.length === 0) {
-            relatedActivities.splice(i, 1);
+            break;
           }
 
           await activity.save();
           return res.status(200).json({ message: 'Activity deleted successfully' });
         }
       }
-
-      return res.status(404).json({ message: 'Related activity not found' });
     } else {
       return res.status(400).json({ message: 'Invalid activityType' });
     }
@@ -394,7 +368,6 @@ const getActivity = async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
-
 
 const markActivityCompleted = async (req, res) => {
   if (!req.body.userId || !req.body.activityId || !req.body.activityType) {

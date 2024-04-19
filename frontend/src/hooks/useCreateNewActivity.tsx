@@ -9,7 +9,7 @@ interface Iprops {
 
 const useCreateNewActivity = ({onSubmitForm, initialState}:Iprops) =>{ 
   const activityScheme = Yup.object({
-    description:Yup.string().required("You need to add the activity name or description"),
+    description:Yup.string().required("You need to add the activity name or description").max(150, 'Max characters is 150 character'),
     time: Yup.string(),
     date: Yup.string()
   })
