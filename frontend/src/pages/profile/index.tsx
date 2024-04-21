@@ -11,7 +11,7 @@ import {
   LogoutBoxNoBtn
 } from "./styles";
 import Button from "src/components/Button";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AppContext } from "src/AppLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "src/state/store";
@@ -26,9 +26,17 @@ const Profile = () => {
   
   const {showLogoutBox, setShowLogoutBox} = useContext(AppContext);
 
-  const {data, isSuccess} = useLogoutQuery({});
-  const handleLogoutGroup = () => {
+  const [shouldLogout, setShouldLogout] = useState(true);
+  const {data, isSuccess} = useLogoutQuery(undefined, {
+    skip: shouldLogout
+  });
 
+  // const {data:logoutData, isSuccess} = useLogoutQuery(undefined, {
+  //   skip: shouldLogout
+  // });
+
+  const handleLogoutGroup = () => {
+    setShouldLogout(false);
     if(isSuccess) {
       dispatch(logout());
       localStorage.clear();
