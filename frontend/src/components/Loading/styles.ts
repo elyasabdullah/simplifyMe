@@ -8,7 +8,7 @@ export const LoadContainer = styled.div`
   & div {
     width: 20px;
     height: 20px;
-    background-color: orchid;
+    background-color: #139ae1;
     border-radius: 50%;
     margin: 0 5px;
     animation-name: up-and-down;
