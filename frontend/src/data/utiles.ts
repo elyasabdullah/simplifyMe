@@ -22,7 +22,7 @@ export async function refreshAccessToken(url:string) {
     });
     
     if (!response.ok) {
-      return false;
+      throw new Error('Failed to refresh token');
     }
 
     const data = await response.json();

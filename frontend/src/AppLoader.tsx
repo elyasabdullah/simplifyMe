@@ -47,13 +47,13 @@ const AppLoader = () => {
   
   useEffect(() => {
     const refreshToken = async () => {
+      setIsLoading(false);
       const data = await refreshAccessToken(apiURL);
       if(data) {
         dispatch(setAuthenticated(true));
       }else {
         dispatch(setAuthenticated(false));
       }
-      setIsLoading(false)
     }
     const asyncFunc = async () => {
       await refreshToken();
