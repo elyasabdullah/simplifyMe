@@ -31,10 +31,6 @@ const Profile = () => {
     skip: shouldLogout
   });
 
-  // const {data:logoutData, isSuccess} = useLogoutQuery(undefined, {
-  //   skip: shouldLogout
-  // });
-
   const handleLogoutGroup = () => {
     setShouldLogout(false);
     if(isSuccess) {

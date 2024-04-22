@@ -11,6 +11,7 @@ import { useSelector, useDispatch} from 'react-redux';
 import { RootState } from './state/store';
 import { refreshAccessToken } from './data/utiles';
 import { setAuthenticated } from './state/user';
+import Loading from './components/Loading';
 
 
 interface IThemeContext {
@@ -38,28 +39,26 @@ const apiURL = import.meta.env.VITE_APP_API_URL;
 const AppLoader = () => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state:RootState) => state.user.isAuthenticated)
-  const userData = useSelector((state:RootState) => state.user)
 
   const [theme, setTheme] = useState(darkTheme);
   const [showNavbarList, setShowNavbarList] = useState(false);
   const [showLogoutBox, setShowLogoutBox] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   
-  let element = isAuthenticated ? <PrivateRoutes/> : <UnAuthenticatedRoutes/>;
-
   useEffect(() => {
     const refreshToken = async () => {
       const data = await refreshAccessToken(apiURL);
       if(data) {
         dispatch(setAuthenticated(true));
-        
       }else {
         dispatch(setAuthenticated(false));
-        
       }
+      setIsLoading(false)
     }
-    refreshToken();
-    
-    // When the refresh token end up while the user is logged in what we will do
+    const asyncFunc = async () => {
+      await refreshToken();
+    }
+    asyncFunc();
   }, [isAuthenticated])
 
   const toggleTheme = () => {
@@ -88,7 +87,7 @@ const AppLoader = () => {
           }}>
         <ThemeProvider theme={theme}>
           <GlobalStyle/>
-          {element}
+          { !isLoading && isAuthenticated ? <PrivateRoutes/> : !isLoading && !isAuthenticated ? <UnAuthenticatedRoutes/> : <Loading />}
         </ThemeProvider>
       </AppContext.Provider>
     </Container>
