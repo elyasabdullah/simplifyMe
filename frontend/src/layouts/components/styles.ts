@@ -56,7 +56,6 @@ export const TitleThemeContainer = styled.div`
 export const HeaderSectionContainerTwo = styled.div`
   display:flex;
   align-items:flex-end;
-  margin-top:1rem;
   justify-content:flex-end;
   @media(max-width:768px) {
     position:absolute;

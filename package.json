@@ -7,7 +7,7 @@
     "install-server": "cd backend && npm install",
     "start-server": "cd backend && node server.js",
     "install-client": "cd frontend && npm install",
-    "build-client": "cd frontend && npm run dev",
+    "build-client": "cd frontend && npm run build",
     "start-client": "cd frontend && npm run dev"
   },
   "author": "",
