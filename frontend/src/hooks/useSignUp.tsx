@@ -37,6 +37,12 @@ const useSignUp = ({onSumitForm, initialState}: Iprops) => {
   };
 
   const onSubmit = () => {
+    const { username, password, email } = formik.values;
+    formik.setValues({
+      username: username?.trim(),
+      email: email?.trim(),
+      password: password?.trim(),
+    });
     formik.handleSubmit()
   }
 

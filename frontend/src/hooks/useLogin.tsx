@@ -37,6 +37,11 @@ const useLogin = ({onSubmitForm, initialState}: props) => {
   }
 
   const onSubmit = () => {
+    const { email, pwd } = formik.values;
+    formik.setValues({
+      email: email?.trim(),
+      pwd: pwd?.trim(),
+    });
     formik.handleSubmit();
   }
   
