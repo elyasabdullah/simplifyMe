@@ -19,7 +19,7 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.4.1",
-    "postmark": "^4.0.2",
+    "postmark": "^4.0.5",
     "uuid": "^9.0.0"
   }
 }
